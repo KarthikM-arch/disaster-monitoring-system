@@ -3,10 +3,32 @@ import MapComponent from "./MapComponent";
 import ChartComponent from "./ChartComponent";
 import "./App.css";
 
-// ✅ ADD THIS (YOUR BACKEND URL)
+// ✅ Clerk imports
+import { SignedIn, SignedOut, SignIn } from "@clerk/clerk-react";
+
+// ✅ Backend URL
 const BASE_URL = "https://disaster-monitoring-system-1.onrender.com";
 
 function App() {
+  return (
+    <>
+      {/* 🔐 SHOW LOGIN FIRST */}
+      <SignedOut>
+        <div className="login-wrapper">
+          <SignIn />
+        </div>
+      </SignedOut>
+
+      {/* 🌍 SHOW APP AFTER LOGIN */}
+      <SignedIn>
+        <MainApp />
+      </SignedIn>
+    </>
+  );
+}
+
+// 🔥 MAIN APP (YOUR DASHBOARD)
+function MainApp() {
   const [data, setData] = useState(null);
   const [position, setPosition] = useState(null);
   const [city, setCity] = useState("");
@@ -29,7 +51,7 @@ function App() {
     loadHistory();
   }, []);
 
-  // 📰 Fetch disaster news
+  // 📰 Fetch news
   const fetchNews = async (cityName) => {
     try {
       if (!cityName) return;
@@ -37,11 +59,7 @@ function App() {
       const res = await fetch(`${BASE_URL}/api/get-news?city=${cityName}`);
       const result = await res.json();
 
-      if (Array.isArray(result)) {
-        setNews(result);
-      } else {
-        setNews([]);
-      }
+      setNews(Array.isArray(result) ? result : []);
     } catch (err) {
       console.error("News error:", err);
       setNews([]);
@@ -126,6 +144,7 @@ function App() {
   return (
     <div className="main">
 
+      {/* 🔎 SEARCH */}
       <div className="top-bar">
         <input
           type="text"
@@ -138,6 +157,7 @@ function App() {
 
       <div className="content">
 
+        {/* LEFT */}
         <div className="left">
           <h1>🌍 Disaster Dashboard</h1>
 
@@ -162,10 +182,12 @@ function App() {
             </div>
           )}
 
+          {/* 📊 CHART */}
           <div className="card">
             <ChartComponent history={markers} />
           </div>
 
+          {/* 📰 NEWS */}
           <div className="card">
             <h3>📰 Disaster News</h3>
 
@@ -178,6 +200,7 @@ function App() {
                   className={`news-card ${data?.risk?.toLowerCase()}`}
                 >
                   {n.image && <img src={n.image} alt="news" />}
+
                   <div>
                     <h4>{n.title}</h4>
                     <p>{n.description}</p>
@@ -191,6 +214,7 @@ function App() {
           </div>
         </div>
 
+        {/* RIGHT */}
         <div className="right">
           <div className="card">
             {data ? (
