@@ -4,7 +4,11 @@ import ChartComponent from "./ChartComponent";
 import "./App.css";
 
 // ✅ Clerk imports
-import { SignedIn, SignedOut, SignIn } from "@clerk/clerk-react";
+import {
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn
+} from "@clerk/clerk-react";
 
 // ✅ Backend URL
 const BASE_URL = "https://disaster-monitoring-system-1.onrender.com";
@@ -12,14 +16,12 @@ const BASE_URL = "https://disaster-monitoring-system-1.onrender.com";
 function App() {
   return (
     <>
-      {/* 🔐 SHOW LOGIN FIRST */}
+      {/* 🔐 FORCE LOGIN FIRST */}
       <SignedOut>
-        <div className="login-wrapper">
-          <SignIn />
-        </div>
+        <RedirectToSignIn />
       </SignedOut>
 
-      {/* 🌍 SHOW APP AFTER LOGIN */}
+      {/* 🌍 AFTER LOGIN → SHOW DASHBOARD */}
       <SignedIn>
         <MainApp />
       </SignedIn>
@@ -27,7 +29,7 @@ function App() {
   );
 }
 
-// 🔥 MAIN APP (YOUR DASHBOARD)
+// 🔥 MAIN DASHBOARD
 function MainApp() {
   const [data, setData] = useState(null);
   const [position, setPosition] = useState(null);
@@ -182,12 +184,10 @@ function MainApp() {
             </div>
           )}
 
-          {/* 📊 CHART */}
           <div className="card">
             <ChartComponent history={markers} />
           </div>
 
-          {/* 📰 NEWS */}
           <div className="card">
             <h3>📰 Disaster News</h3>
 
@@ -200,7 +200,6 @@ function MainApp() {
                   className={`news-card ${data?.risk?.toLowerCase()}`}
                 >
                   {n.image && <img src={n.image} alt="news" />}
-
                   <div>
                     <h4>{n.title}</h4>
                     <p>{n.description}</p>
