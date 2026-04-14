@@ -1,4 +1,4 @@
-Project URL:https://disaster-monitoring-system-22.onrender.com
+Project URL:https://disaster-monitoring-system-22.onrender.com/
 # 🌍 Disaster Monitoring System
 
 A full-stack web application that predicts disaster risk using real-time weather data, displays interactive maps, and provides location-based disaster news alerts.
