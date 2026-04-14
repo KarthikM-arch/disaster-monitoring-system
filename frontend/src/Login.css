@@ -1,0 +1,59 @@
+/* Background */
+.login-container {
+  height: 100vh;
+  background: url("./image/png1.jpg") no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Glass card */
+.login-card {
+  width: 300px;
+  padding: 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.15);
+  text-align: center;
+  color: white;
+}
+
+/* Title */
+.login-card h2 {
+  margin-bottom: 5px;
+}
+
+/* Subtitle */
+.subtitle {
+  font-size: 14px;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+/* Inputs */
+.login-card input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  text-align: center;
+}
+
+/* Button */
+.login-card button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  background: #ffccaa;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.login-card button:hover {
+  background: #ff9966;
+}
